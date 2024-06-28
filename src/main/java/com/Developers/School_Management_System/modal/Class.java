@@ -6,12 +6,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name= "ClaasTble")
+@Table(name= "ClassTble")
 public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ClassId;
     private  String ClassName;
-
 
 }
