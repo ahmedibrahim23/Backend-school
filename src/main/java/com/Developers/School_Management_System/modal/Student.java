@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Data
@@ -22,4 +24,8 @@ public class Student {
     private String email;
     private Date enrolmentDate;
     private String password;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
+    public List<Fee> fees;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
+    public List<Attendance> attendances;
 }
