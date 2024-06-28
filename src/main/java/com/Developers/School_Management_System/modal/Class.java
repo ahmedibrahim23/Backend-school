@@ -13,4 +13,10 @@ public class Class {
     private Long ClassId;
     private  String ClassName;
 
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private Teacher teacher;
+
+
 }
