@@ -26,6 +26,6 @@ public class Student {
     private String password;
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
     public List<Fee> fees;
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
-    public List<Attendance> attendances;
+    //@OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
+   // public List<Attendance> attendances;
 }
