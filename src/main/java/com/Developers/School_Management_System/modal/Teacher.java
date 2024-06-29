@@ -33,7 +33,7 @@ public class Teacher {
 
 
     @OneToMany(mappedBy = "teacher")
-    private List<Class> classes;
+    private List<SchoolClass> schoolClasses;
 
 
 }
