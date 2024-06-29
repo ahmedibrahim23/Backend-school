@@ -7,10 +7,10 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name= "ClassTble")
-public class Class {
+public class SchoolClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ClassId;
+    private Long classId;
     private  String ClassName;
 
 
