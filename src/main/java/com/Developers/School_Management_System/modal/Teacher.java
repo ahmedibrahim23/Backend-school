@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,5 +30,10 @@ public class Teacher {
     private String password;
 
     private Date HireDate;
+
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Class> classes;
+
 
 }
