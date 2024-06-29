@@ -13,5 +13,5 @@ public class Subject {
     private String subjectName;
     @ManyToOne
     @JoinColumn(name = "ClassId",nullable = false)
-    private SchoolClass schoolClassTble;
+    private Class ClassTble;
 }

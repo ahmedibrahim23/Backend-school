@@ -1,7 +1,7 @@
 package com.Developers.School_Management_System.controller;
 
 import com.Developers.School_Management_System.Exception.ClassNotFoundException;
-import com.Developers.School_Management_System.modal.SchoolClass;
+import com.Developers.School_Management_System.modal.Class;
 import com.Developers.School_Management_System.repo.ClassRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +15,17 @@ public class ClassController {
     private ClassRepo classRepo;
 
     @PostMapping("/class")
-    public SchoolClass newClass(@RequestBody SchoolClass newClass) {
+    public Class newClass(@RequestBody Class newClass) {
         return classRepo.save(newClass);
     }
 
     @GetMapping("/classes")
-    public List<SchoolClass> getAllClasses() {
+    public List<Class> getAllClasses() {
         return classRepo.findAll();
     }
 
     @GetMapping("/classes/{classId}")
-    public SchoolClass getClassById(@PathVariable Long classId) {
+    public Class getClassById(@PathVariable Long classId) {
         return classRepo.findById(classId)
                 .orElseThrow(() -> new ClassNotFoundException(classId));
     }
@@ -33,7 +33,7 @@ public class ClassController {
 
 
     @PutMapping("/classes/{classId}")
-    public SchoolClass updateClass(@RequestBody SchoolClass newClass, @PathVariable long ClassId) {
+    public Class updateClass(@RequestBody Class newClass, @PathVariable long ClassId) {
         return classRepo.findById(ClassId)
                 .map(classes-> {
                     classes .setClassName(newClass.getClassName());

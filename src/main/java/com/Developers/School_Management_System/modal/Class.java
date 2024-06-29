@@ -7,16 +7,16 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name= "ClassTble")
-public class SchoolClass {
+public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long classId;
-    private  String ClassName;
+    @Column(name = "Class_id")
+    private Long id;
 
+    @Column(name = "Name")
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
-    private Teacher teacher;
-
-
+    @JoinColumn(name = "Subject_id")
+    private Subject subject;
 }

@@ -12,28 +12,29 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TId")
     private Long id;
 
-    private String FullName;
+    @Column(name = "FullName")
+    private String fullName;
 
-    private Date DateOfBirth;
+    @ManyToOne
+    @JoinColumn(name = "Class_id")
+    private Class className;
 
-    private String Gender;
+    @Column(name = "Gender")
+    private String gender;
 
-    private String Address;
+    @Column(name = "Email")
+    private String email;
 
-    private  Long  Phone;
+    @Column(name = "Hiredate")
+    private Date hireDate;
 
-    @Column(unique = true)
-    private String Email;
+    @ManyToOne
+    @JoinColumn(name = "Subject_id")
+    private Subject subject;
 
-    private String password;
-
-    private Date HireDate;
-
-
-    @OneToMany(mappedBy = "teacher")
-    private List<SchoolClass> schoolClasses;
 
 
 }

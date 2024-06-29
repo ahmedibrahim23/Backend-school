@@ -1,20 +1,22 @@
 package com.Developers.School_Management_System.modal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
 public class Attendance {
-    private int attendanceID;
-    @ManyToOne
-    @JoinColumn(name = "StudentID", nullable = false)
-    private Student student;
-    @ManyToOne
-    @JoinColumn(name = "fullName", nullable = false)
-    private Student studentFullName;
-    private Date date;
-    private String Status;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "StudentId")
+    private Student student;
+
+    @Column(name = "Date")
+    private Date date;
+
+    @Column(name = "Status")
+    private String status;
 }

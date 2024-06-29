@@ -13,19 +13,29 @@ import java.util.Map;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Std_id")
     private Long id;
-    @Column(nullable = false,length = 50)
+
+    @Column(name = "FullName")
     private String fullName;
+
+    @Column(name = "Age")
+    private int age;
+
+    @Column(name = "Phone")
+    private String phone;
+
+    @Column(name = "Date_of_birth")
     private Date dateOfBirth;
-    private String sex;
-    private String address;
-    private int phone;
-    @Column(unique = true)
-    private String email;
-    private Date enrolmentDate;
+
+    @ManyToOne
+    @JoinColumn(name = "Class_id")
+    private Class classId;
+
+    @Column(name = "Gender")
+    private String gender;
+
+    @Column(name = "Password")
     private String password;
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
-    public List<Fee> fees;
-    //@OneToMany(mappedBy = "student",cascade = CascadeType.ALL,orphanRemoval = true)
-   // public List<Attendance> attendances;
+
 }

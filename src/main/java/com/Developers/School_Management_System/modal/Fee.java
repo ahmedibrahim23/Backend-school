@@ -10,12 +10,19 @@ import java.util.Date;
 public class Fee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private Long id;
-    @Column(nullable = false,length = 80)
-    private Double Amount;
-    private String Status;
+
+    @Column(name = "Amount")
+    private double amount;
+
+    @Column(name = "Status")
+    private String status;
+
+    @Column(name = "Date")
     private Date date;
+
     @ManyToOne
-    @JoinColumn(name = "id",nullable = false)
+    @JoinColumn(name = "StudentId")
     private Student student;
 }
