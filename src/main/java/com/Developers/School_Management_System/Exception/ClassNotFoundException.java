@@ -1,4 +1,4 @@
-package com.Developers.School_Management_System.Exception;
+package com.Developers.School_Management_System.exception;
 
 public class ClassNotFoundException  extends  RuntimeException{
 
