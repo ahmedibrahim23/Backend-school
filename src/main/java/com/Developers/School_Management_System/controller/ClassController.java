@@ -1,6 +1,6 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.Exception.ClassNotFoundException;
+import com.Developers.School_Management_System.exception.ClassNotFoundException;
 import com.Developers.School_Management_System.modal.Class;
 import com.Developers.School_Management_System.repo.ClassRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ClassController {
     public Class updateClass(@RequestBody Class newClass, @PathVariable long ClassId) {
         return classRepo.findById(ClassId)
                 .map(classes-> {
-                    classes.setName(newClass.getName());
+                  classes .setName(newClass.getName());
                     return classRepo.save(classes);
                 }).orElseThrow(() -> new ClassNotFoundException(ClassId));
     }
