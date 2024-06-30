@@ -36,7 +36,7 @@ public class ClassController {
     public Class updateClass(@RequestBody Class newClass, @PathVariable long ClassId) {
         return classRepo.findById(ClassId)
                 .map(classes-> {
-                    classes .setClassName(newClass.getClassName());
+                    classes.setName(newClass.getName());
                     return classRepo.save(classes);
                 }).orElseThrow(() -> new ClassNotFoundException(ClassId));
     }
