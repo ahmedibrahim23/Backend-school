@@ -12,11 +12,14 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TId")
+    @Column(name = "Id")
     private Long id;
 
     @Column(name = "FullName")
     private String fullName;
+
+    @Column(name = "DateOfBirth")
+    private Date DateOfBirth;
 
     @ManyToOne
     @JoinColumn(name = "Class_id")
@@ -25,8 +28,18 @@ public class Teacher {
     @Column(name = "Gender")
     private String gender;
 
+    @Column(name = "Address")
+    private String Address;
+
+    @Column(name = "Phone")
+    private String Phone;
+
+
+
     @Column(name = "Email")
     private String email;
+    @Column(name = "Password")
+    private String Password;
 
     @Column(name = "Hiredate")
     private Date hireDate;
