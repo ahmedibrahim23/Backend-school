@@ -6,23 +6,23 @@ import lombok.Data;
 import java.util.Date;
 @Entity
 @Data
-@Table(name = "FeeTaable")
+@Table(name = "FeeTable")
 public class Fee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "Amount")
     private double amount;
 
     @Column(name = "Status")
-    private String status;
+    private Boolean status;
 
     @Column(name = "Date")
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "StudentId")
-    private Student student;
+  @ManyToOne
+    @JoinColumn(name = "id",nullable = false)
+    private Class StudentTble;
 }
