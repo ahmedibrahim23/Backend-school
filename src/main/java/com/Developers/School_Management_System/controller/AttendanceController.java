@@ -14,22 +14,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/Attendance")
 public class AttendanceController {
-    private  final AttendanceServices attendanceServices;
-@Autowired
-    public AttendanceController(AttendanceServices attendanceServices) {
-        this.attendanceServices = attendanceServices;
-    }
-    @GetMapping
-    public String getAllAttendance(Model model) {
-        List<Attendance> attendances=attendanceServices.getAllAttendance();
-        model.addAttribute("attendances", attendances);
-        return "attendances";
-    }
-    @GetMapping("/{id}")
-    public String getAttendanceById(@PathVariable Long id, Model model) {
-        Attendance attendance=attendanceServices.getAttendanceById(id);
-        model.addAttribute("attendance", attendance);
-        return "attendance-details";
-    }
+
+
+
 
 }
