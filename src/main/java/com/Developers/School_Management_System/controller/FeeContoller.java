@@ -43,10 +43,10 @@ public class FeeContoller {
                     fee1.setStatus(fee.getStatus());
                     fee1.setDate(fee.getDate());
                     fee1.setStudentTble(fee.getStudentTble());
-                    return feeRepository.save();
+                    return feeRepository.save(fee1);
 
 
-                })
+                }).orElseThrow(() -> new StudentNotFoundException(id));
 
     }
 
