@@ -40,4 +40,8 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "id")
     private Fee fee;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Attendance attendance;
 }

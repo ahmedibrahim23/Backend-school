@@ -23,6 +23,6 @@ public class Fee {
     private Date date;
 
   @ManyToOne
-    @JoinColumn(name = "id",nullable = false)
-    private Class StudentTble;
+  @JoinColumn(name = "id", nullable = false)
+  private Class StudentTble;
 }

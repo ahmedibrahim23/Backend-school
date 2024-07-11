@@ -1,9 +1,12 @@
 package com.Developers.School_Management_System.modal;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
-
+@Entity
+@Data
+@Table(name = "AttendanceTable")
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,8 +14,8 @@ public class Attendance {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "StudentId")
-    private Student student;
+    @JoinColumn(name = "FullName", nullable = false)
+    private Class StudentTble;
 
     @Column(name = "Date")
     private Date date;

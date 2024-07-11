@@ -36,7 +36,8 @@ public class FeeContoller {
         feeRepository.deleteById(id);
 
     }
-    Fee  updateFee(@PathVariable Long id, @RequestBody Fee fee){
+
+ public    Fee  updateFee(@PathVariable Long id, @RequestBody Fee fee){
         return feeRepository.findById(id)
                 .map(fee1 ->{
                     fee1.setAmount(fee.getAmount());
