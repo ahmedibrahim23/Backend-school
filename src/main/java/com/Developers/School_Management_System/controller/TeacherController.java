@@ -1,6 +1,6 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.Exception.ClassNotFoundException;
+import com.Developers.School_Management_System.exception.ClassNotFoundException;
 import com.Developers.School_Management_System.modal.Teacher;
 import com.Developers.School_Management_System.repo.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +26,18 @@ public class TeacherController {
     }
 
     @GetMapping("/Teachers/{id}")
-    public Teacher getTeacherById(@PathVariable Long id) {
+    public Teacher getTeacherById(@PathVariable Long id) throws ClassNotFoundException {
         return teacherRepo.findById(id)
                 .orElseThrow(() -> new ClassNotFoundException(id));
     }
 
     @PutMapping("/Teachers/{id}")
-    public Teacher updateTeacher(@RequestBody Teacher newTeacher, @PathVariable long id) {
+    public Teacher updateTeacher(@RequestBody Teacher newTeacher, @PathVariable long id) throws ClassNotFoundException {
         return teacherRepo.findById(id)
                 .map(teacher -> {
                     teacher.setFullName(newTeacher.getFullName());
-                    teacher.setDateOfBirth(newTeacher.getDateOfBirth());
                     teacher.setGender(newTeacher.getGender());
-                    teacher.setAddress(newTeacher.getAddress());
-                    teacher.setPhone(newTeacher.getPhone());
                     teacher.setEmail(newTeacher.getEmail());
-                    teacher.setPassword(newTeacher.getPassword());
                     teacher.setHireDate(newTeacher.getHireDate());
                     return teacherRepo.save(teacher);
                 }).orElseThrow(() -> new ClassNotFoundException(id));
@@ -49,7 +45,7 @@ public class TeacherController {
 
 
     @DeleteMapping("/Teachers/{id}")
-    String DeleteTeacher(@PathVariable long id){
+     public String DeleteTeacher(@PathVariable long id) throws ClassNotFoundException {
         if (!teacherRepo.existsById(id)){
             throw new ClassNotFoundException(id);
         }

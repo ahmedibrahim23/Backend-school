@@ -1,35 +1,58 @@
 package com.Developers.School_Management_System.controller;
 
+import com.Developers.School_Management_System.Exception.StudentNotFoundException;
 import com.Developers.School_Management_System.modal.Attendance;
-import com.Developers.School_Management_System.service.AttendanceServices;
+import com.Developers.School_Management_System.repo.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/Attendance")
 public class AttendanceController {
-    private  final AttendanceServices attendanceServices;
-@Autowired
-    public AttendanceController(AttendanceServices attendanceServices) {
-        this.attendanceServices = attendanceServices;
-    }
-    @GetMapping
-    public String getAllAttendance(Model model) {
-        List<Attendance> attendances=attendanceServices.getAllAttendance();
-        model.addAttribute("attendances", attendances);
-        return "attendances";
-    }
-    @GetMapping("/{id}")
-    public String getAttendanceById(@PathVariable Long id, Model model) {
-        Attendance attendance=attendanceServices.getAttendanceById(id);
-        model.addAttribute("attendance", attendance);
-        return "attendance-details";
+
+    private final AttendanceRepository attendanceRepository;
+
+    @Autowired
+    public AttendanceController(AttendanceRepository attendanceRepository) {
+        this.attendanceRepository = attendanceRepository;
     }
 
+    @GetMapping
+    public List<Attendance> getAllAttendance() {
+        return attendanceRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Attendance getFeeById(@PathVariable Long id) {
+        return attendanceRepository.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public void saveAttendance(@RequestBody Attendance attendance) {
+        attendanceRepository.save(attendance);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAttendance(@PathVariable Long id) {
+        if (!attendanceRepository.existsById(id)) {
+            throw new StudentNotFoundException(id);
+        }
+        attendanceRepository.deleteById(id);
+
+    }
+
+    public Attendance updateAttendance(@PathVariable Long id, @RequestBody Attendance attendance) {
+        return attendanceRepository.findById(id)
+                .map(attendance1 -> {
+                    attendance1.getStudentTble(attendance.getStudentTble());
+                    attendance1.setDate(attendance.getDate());
+                    attendance1.setStatus(attendance.getStatus());
+
+
+                })
+    }
+    
 }

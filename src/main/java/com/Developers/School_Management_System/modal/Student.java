@@ -9,11 +9,11 @@ import java.util.Map;
 
 @Entity
 @Data
-@Table(name = "studentTble")
+@Table(name = "StudentTble")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Std_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "FullName")
@@ -37,5 +37,11 @@ public class Student {
 
     @Column(name = "Password")
     private String password;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Fee fee;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Attendance attendance;
 }
