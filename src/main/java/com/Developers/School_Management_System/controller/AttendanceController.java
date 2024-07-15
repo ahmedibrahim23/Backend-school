@@ -47,12 +47,12 @@ public class AttendanceController {
     public Attendance updateAttendance(@PathVariable Long id, @RequestBody Attendance attendance) {
         return attendanceRepository.findById(id)
                 .map(attendance1 -> {
-                    attendance1.getStudentTble(attendance.getStudentTble());
+                    attendance1.setStudentTble(attendance.getStudentTble());
                     attendance1.setDate(attendance.getDate());
                     attendance1.setStatus(attendance.getStatus());
+                    return attendanceRepository.save(attendance);
 
-
-                })
+                }).orElse(null);
     }
     
 }
