@@ -6,5 +6,5 @@ public class ClassNotFoundException  extends  RuntimeException{
     public ClassNotFoundException(Long id) {
         super("Class not found with id: " + id);
     }
-    
+
 }
