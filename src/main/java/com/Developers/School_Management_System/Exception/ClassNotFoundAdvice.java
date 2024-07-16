@@ -1,4 +1,4 @@
-package com.Developers.School_Management_System.exception;
+package com.Developers.School_Management_System.Exception;
 
 
 import org.springframework.http.HttpStatus;
