@@ -43,11 +43,4 @@ public class Teacher {
 
     @Column(name = "Hiredate")
     private Date hireDate;
-
-    @ManyToOne
-    @JoinColumn(name = "Subject_id")
-    private Fee fee;
-
-
-
 }
