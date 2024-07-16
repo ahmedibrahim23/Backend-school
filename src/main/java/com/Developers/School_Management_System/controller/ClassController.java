@@ -33,7 +33,7 @@ public class ClassController {
 
 
     @PutMapping("/classes/{classId}")
-    public Class updateClass(@RequestBody Class newClass, @PathVariable long ClassId) {
+    public Class updateClass(@RequestBody Class newClass, @PathVariable Long ClassId) {
         return classRepo.findById(ClassId)
                 .map(classes-> {
                   classes .setName(newClass.getName());
@@ -47,7 +47,7 @@ public class ClassController {
             throw new ClassNotFoundException(ClassId);
         }
         classRepo.deleteById(ClassId);
-        return "The Class with ClassId"+ClassId + "has been deleted succesfuly!";
+        return "The Class with ClassId"+ClassId + "has been deleted successfully!";
     }
 
 

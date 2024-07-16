@@ -43,7 +43,7 @@ public class ExamController {
             exam.setMarks(examination.getMarks());
             exam.setStudent(examination.getStudent());
               return examRepository.save(exam);
-        }).orElseThrow(() -> new ExamNotFoundException(id));
+        }).orElse(null);
     }
 
 

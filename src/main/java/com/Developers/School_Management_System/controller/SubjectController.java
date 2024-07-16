@@ -1,6 +1,7 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.exception.ExamNotFoundException;
+
+import com.Developers.School_Management_System.exception.SubjectNotFoundException;
 import com.Developers.School_Management_System.modal.Subject;
 import com.Developers.School_Management_System.repo.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SubjectController {
     @DeleteMapping("/{id}")
     public void deleteSubject( @PathVariable long id){
         if(!subjectRepository.existsById(id)){
-            throw new ExamNotFoundException(id);
+            throw new SubjectNotFoundException(id);
         }
         subjectRepository.deleteById(id);
 
@@ -42,7 +43,7 @@ public class SubjectController {
                     sub.setSubjectName(subject.getSubjectName());
                     sub.setClassTble(subject.getClassTble());
                     return subjectRepository.save(sub);
-                }).orElseThrow(() ->  new  ExamNotFoundException(id)) ;
+                }).orElseThrow(() ->  new SubjectNotFoundException(id));
 
     }
 

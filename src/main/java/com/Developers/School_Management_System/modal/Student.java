@@ -37,11 +37,4 @@ public class Student {
 
     @Column(name = "Password")
     private String password;
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Fee fee;
-
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Attendance attendance;
 }
