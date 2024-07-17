@@ -1,7 +1,6 @@
 package com.Developers.School_Management_System.controller;
 
 
-import com.Developers.School_Management_System.exception.SubjectNotFoundException;
 import com.Developers.School_Management_System.modal.Subject;
 import com.Developers.School_Management_System.repo.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;

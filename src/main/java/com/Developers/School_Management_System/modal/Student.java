@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 @Data
@@ -27,10 +25,6 @@ public class Student {
 
     @Column(name = "Date_of_birth")
     private Date dateOfBirth;
-
-    @ManyToOne
-    @JoinColumn(name = "Class_id")
-    private Class classId;
 
     @Column(name = "Gender")
     private String gender;
