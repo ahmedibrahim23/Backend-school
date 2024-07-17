@@ -1,50 +1,62 @@
 package com.Developers.School_Management_System.controller;
 
 
-import com.Developers.School_Management_System.Exception.ExamNotFoundException;
+import com.Developers.School_Management_System.Exception.ResourceNotFoundException;
 import com.Developers.School_Management_System.modal.Examination;
 import com.Developers.School_Management_System.repo.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/exams")
+@RequestMapping("/api/v1/")
 public class ExamController {
-    public final ExamRepository examRepository;
     @Autowired
-    public ExamController(ExamRepository examRepository){
-        this.examRepository=examRepository;
-    }
-    @GetMapping()
+    private ExamRepository examRepository;
+    //get all exams
+    @GetMapping("exams")
     public List<Examination> getAllExam(){
-        return examRepository.findAll();
+        return this.examRepository.findAll();
     }
-    @GetMapping("/{id}")
-    public Examination getExamById(Long id){
-        return examRepository.findById(id).orElseThrow(() -> new ExamNotFoundException(id));
-    }
-    @PostMapping
-    public Examination saveExam(@RequestBody Examination examination){
-        return examRepository.save(examination);
-    }
-    @DeleteMapping("/{id}")
-    public String deleteExam(@PathVariable Long id){
-        if(!examRepository.existsById(id)){
-            throw new ExamNotFoundException(id);
+    //get exam by id
+    @GetMapping("/exams/{id}")
+    public ResponseEntity<Examination> getExamById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+            Examination examination=examRepository.findById(id)
+                    .orElseThrow(()-> new ResourceNotFoundException("exam not found fot id"+id));
+            return ResponseEntity.ok().body(examination);
+
         }
-        examRepository.deleteById(id);
-        return "The exam  with Id"+ id + "has been deleted succesfuly!";
+    //save exam
+    public Examination createExam( @RequestBody Examination examination){
+        return this.examRepository.save(examination);
+
     }
-    @PutMapping("/{id}")
-    public Examination updateExam(@PathVariable  Long id,@RequestBody Examination examination){
-         return examRepository.findById(id).map(exam ->{
-            exam.setMarks(examination.getMarks());
-            exam.setStudent(examination.getStudent());
-              return examRepository.save(exam);
-        }).orElseThrow(() -> new ExamNotFoundException(id));
+
+    //update exam
+    @PutMapping("exams/{id}")
+    public ResponseEntity<Examination> updateSubject(@PathVariable(value = "id") Long id,
+                                                 @Validated @RequestBody Examination examinationDetails) throws ResourceNotFoundException {
+        Examination examination=examRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("subject not found for this id:" + id));
+        examination.setMarks(examinationDetails.getMarks());
+        return ResponseEntity.ok(this.examRepository.save(examination));
+
+
     }
+    //delete exam
+    public Map< String, Boolean> deleteExam(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        Examination examination= examRepository.findById(id).orElseThrow ( () -> new ResourceNotFoundException("subject not found for this id"));
+        this.examRepository.delete(examination);
+        Map<String ,Boolean> response=new HashMap<>();
+        response.put("delete", Boolean.TRUE);
+        return response;
+    }
+
+
 
 
 }
