@@ -1,6 +1,6 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.Exception.StudentNotFoundException;
+import com.Developers.School_Management_System.exception.StudentNotFoundException;
 import com.Developers.School_Management_System.modal.Student;
 import com.Developers.School_Management_System.repo.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/Student")
+@RequestMapping("/Students")
 
 public class StudentController {
     private final StudentRepo studentRepo;
@@ -16,7 +16,7 @@ public class StudentController {
     public StudentController(StudentRepo studentRepo) {
         this.studentRepo = studentRepo;
     }
-    @PostMapping("/student")
+    @PostMapping("/new")
     Student newStudent(@RequestBody Student newStudent){
         return studentRepo.save(newStudent);
     }
@@ -25,12 +25,12 @@ public class StudentController {
         return studentRepo.findAll();
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     Student getStudentById(@PathVariable Long id){
         return studentRepo.findById(id).orElseThrow(()->new StudentNotFoundException(id));
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/edit/{id}")
     Student updateStudent(@RequestBody Student newStudent, @PathVariable Long id){
         return studentRepo.findById(id).map(student->{
             student.setFullName(newStudent.getFullName());
@@ -44,7 +44,7 @@ public class StudentController {
         }).orElseThrow(()->new StudentNotFoundException(id));
     }
 
-    @DeleteMapping("/student/{id}")
+    @DeleteMapping("/delete/{id}")
     String deleteById(@PathVariable Long id){
         if (!studentRepo.existsById(id)){
             throw new StudentNotFoundException(id);

@@ -13,7 +13,7 @@ import java.util.Map;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "student_id")
     private Long id;
 
     @Column(name = "FullName")
@@ -37,11 +37,4 @@ public class Student {
 
     @Column(name = "Password")
     private String password;
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Fee fee;
-
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Attendance attendance;
 }
