@@ -4,19 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "ExaminationTble")
+@Table(name = "exam_tble")
 @Data
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "studentID", nullable = false)
-    private Student student;
-    @ManyToOne
-    @JoinColumn(name = "subjectid",nullable = false)
-    private Subject subject;
+    @Column(name = "stdmarks")
     private String marks;
-
 
 }
