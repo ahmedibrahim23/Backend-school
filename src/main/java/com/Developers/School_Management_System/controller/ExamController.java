@@ -1,7 +1,7 @@
 package com.Developers.School_Management_System.controller;
 
 
-import com.Developers.School_Management_System.exception.ExamNotFoundException;
+import com.Developers.School_Management_System.Exception.ExamNotFoundException;
 import com.Developers.School_Management_System.modal.Examination;
 import com.Developers.School_Management_System.repo.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
