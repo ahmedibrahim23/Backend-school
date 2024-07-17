@@ -1,24 +1,18 @@
 package com.Developers.School_Management_System.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
+@Data
 
-@Setter
-@Getter
 public class ErrorDetails {
     private Date timestamp;
     private String message;
     private String details;
 
-    public ErrorDetails(Date timestamp, String message, String details) {
-        this.timestamp = timestamp;
+    public ErrorDetails(String message, Date timestamp, String details) {
         this.message = message;
+        this.timestamp = timestamp;
         this.details = details;
     }
-
 }
-
