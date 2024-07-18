@@ -12,6 +12,4 @@ public class Subject {
     private Long id;
     @Column(name = "subjectName")
     private String subjectName;
-
-
 }

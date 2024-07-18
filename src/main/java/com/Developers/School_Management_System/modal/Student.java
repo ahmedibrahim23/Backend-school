@@ -29,6 +29,9 @@ public class Student {
     @Column(name = "Gender")
     private String gender;
 
+
+    private String className;
+
     @Column(name = "Password")
     private String password;
 }

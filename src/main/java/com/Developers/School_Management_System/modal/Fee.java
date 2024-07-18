@@ -16,13 +16,13 @@ public class Fee {
     @Column(name = "Amount")
     private double amount;
 
-    @Column(name = "Status")
-    private Boolean status;
-
     @Column(name = "Date")
     private Date date;
 
   @ManyToOne
   @JoinColumn(name = "student_id", nullable = false)
-  private Class StudentTble;
+  private StdClass StudentTble;
+
+    @Column(name = "Status")
+    private Boolean status;
 }

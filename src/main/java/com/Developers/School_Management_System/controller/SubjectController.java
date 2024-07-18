@@ -14,17 +14,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/subjects")
 public class SubjectController {
     @Autowired
     private SubjectRepository subjectRepository;
     //get subjects
-    @GetMapping("subjects")
+    @GetMapping
     public List<Subject> getAllSubject(){
         return this.subjectRepository.findAll();
     }
     // get subject by id
-    @GetMapping("/subjects/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Subject> getSubjectById(@PathVariable(value = "id") Long id)
         throws ResourceNotFoundException{
         Subject subject=subjectRepository.findById(id)
@@ -34,13 +34,13 @@ public class SubjectController {
     }
 
     //save subjects
-    @PostMapping("subjects")
+    @PostMapping("/new")
     public Subject createSubject(@RequestBody Subject subject){
         return this.subjectRepository.save(subject);
     }
 
     //update subject
-    @PutMapping("subject/{id}")
+    @PutMapping("edit/{id}")
     public ResponseEntity<Subject> updateSubject(@PathVariable(value = "id") Long id,
                                                  @Validated @RequestBody Subject subjectDetail) throws ResourceNotFoundException {
         Subject subject=subjectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("subject not found for this id:" + id));
@@ -50,7 +50,7 @@ public class SubjectController {
 
     }
     //delete subject
-    @DeleteMapping("/subjects/{id}")
+    @DeleteMapping("/delete/{id}")
     public Map<String,Boolean> deleteSubject(@PathVariable(value = "id") Long id){
         Subject subject= subjectRepository.findById(id).orElseThrow( () -> new ResourceAccessException("subject not found for this id"));
          this.subjectRepository.delete(subject);
@@ -58,6 +58,4 @@ public class SubjectController {
          response.put("delete", Boolean.TRUE);
          return response;
     }
-
-
 }

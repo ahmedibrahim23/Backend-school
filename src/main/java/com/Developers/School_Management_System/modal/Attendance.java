@@ -13,9 +13,8 @@ public class Attendance {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "FullName", nullable = false)
-    private Class StudentTble;
+
+    private String StudentName;
 
     @Column(name = "Date")
     private Date date;

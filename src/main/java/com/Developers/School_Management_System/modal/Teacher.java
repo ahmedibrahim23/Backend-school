@@ -21,9 +21,8 @@ public class Teacher {
     @Column(name = "DateOfBirth")
     private Date DateOfBirth;
 
-    @ManyToOne
-    @JoinColumn(name = "Class_id")
-    private Class className;
+
+    private String className;
 
     @Column(name = "Gender")
     private String gender;
@@ -38,6 +37,10 @@ public class Teacher {
 
     @Column(name = "Email")
     private String email;
+
+    @Column(name = "age")
+    private int Age;
+
     @Column(name = "Password")
     private String Password;
 

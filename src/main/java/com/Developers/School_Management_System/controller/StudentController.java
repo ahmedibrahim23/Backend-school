@@ -15,16 +15,16 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/students")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    @GetMapping("students")
+    @GetMapping
     public List<Student> getAllStudent(){
         return this.studentRepository.findAll();
     }
-    @GetMapping("/students/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable(value = "id") Long studentId)
             throws ResourceNotFoundException {
         Student student= studentRepository.findById(studentId)
@@ -32,7 +32,7 @@ public class StudentController {
         return ResponseEntity.ok().body(student);
     }
 
-    @PostMapping("student/new")
+    @PostMapping("/new")
     public Student saveStudent(@RequestBody Student student){
         return this.studentRepository.save(student);
     }
