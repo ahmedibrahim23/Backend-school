@@ -3,8 +3,8 @@ package com.Developers.School_Management_System.exception;
 import lombok.Data;
 
 import java.util.Date;
-@Data
 
+@Data
 public class ErrorDetails {
     private Date timestamp;
     private String message;
