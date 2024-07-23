@@ -19,22 +19,22 @@ public class Teacher {
     private String fullName;
 
     @Column(name = "DateOfBirth")
-    private Date DateOfBirth;
+    private Date dateOfBirth;
 
     @Column(name = "Gender")
     private String gender;
 
     @Column(name = "Address")
-    private String Address;
+    private String address;
 
     @Column(name = "Phone")
-    private String Phone;
+    private String phone;
 
     @Column(name = "Email")
     private String email;
 
     @Column(name = "age")
-    private int Age;
+    private int age;
 
     @Column(name = "Password")
     private String Password;
