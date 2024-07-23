@@ -21,9 +21,6 @@ public class Teacher {
     @Column(name = "DateOfBirth")
     private Date DateOfBirth;
 
-
-    private String className;
-
     @Column(name = "Gender")
     private String gender;
 
@@ -32,8 +29,6 @@ public class Teacher {
 
     @Column(name = "Phone")
     private String Phone;
-
-
 
     @Column(name = "Email")
     private String email;
@@ -46,4 +41,10 @@ public class Teacher {
 
     @Column(name = "Hiredate")
     private Date hireDate;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<StdClass> classes;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Subject> subjects;
 }
