@@ -18,42 +18,54 @@ import java.util.Map;
 public class ExamController {
     @Autowired
     private ExamRepository examRepository;
-    //get all exams
+
+    // Get all exams
     @GetMapping
-    public List<Examination> getAllExam(){
+    public List<Examination> getAllExams() {
         return this.examRepository.findAll();
     }
-    //get exam by id
+
+    // Get exam by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Examination> getExamById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-            Examination examination=examRepository.findById(id)
-                    .orElseThrow(()-> new ResourceNotFoundException("exam not found fot id"+id));
-            return ResponseEntity.ok().body(examination);
+    public ResponseEntity<Examination> getExamById(@PathVariable(value = "id") Long examId)
+            throws ResourceNotFoundException {
+        Examination exam = examRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exam not found for this id :: " + examId));
+        return ResponseEntity.ok().body(exam);
+    }
 
-        }
-    //save exam
+    // Create a new exam
     @PostMapping("/new")
-    public Examination createExam( @RequestBody Examination examination){
-        return this.examRepository.save(examination);
+    public Exam createExam(@RequestBody Exam exam) {
+        return this.examRepository.save(exam);
     }
 
-    //update exam
+    // Update an existing exam
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Examination> updateSubject(@PathVariable(value = "id") Long id,
-                                                 @Validated @RequestBody Examination examinationDetails) throws ResourceNotFoundException {
-        Examination examination=examRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("subject not found for this id:" + id));
-        examination.setMarks(examinationDetails.getMarks());
-        return ResponseEntity.ok(this.examRepository.save(examination));
+    public ResponseEntity<Examination> updateExam(@PathVariable(value = "id") Long examId,
+                                           @Validated @RequestBody Examination examDetails) throws ResourceNotFoundException {
+        Examination exam = examRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exam not found for this id :: " + examId));
 
+        // Update exam fields
+        exam.setSubject(examDetails.getSubject());
+        exam.setStudent(examDetails.getStudent());
+        exam.setMarks(examDetails.getMarks());
 
+        return ResponseEntity.ok(this.examRepository.save(exam));
     }
-    //delete exam
+
+    // Delete an exam
     @DeleteMapping("/delete/{id}")
-    public Map< String, Boolean> deleteExam(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        Examination examination= examRepository.findById(id).orElseThrow ( () -> new ResourceNotFoundException("subject not found for this id"));
-        this.examRepository.delete(examination);
-        Map<String ,Boolean> response=new HashMap<>();
-        response.put("delete", Boolean.TRUE);
+    public Map<String, Boolean> deleteExam(@PathVariable(value = "id") Long examId) throws ResourceNotFoundException {
+        Examination exam = examRepository.findById(examId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exam not found for this id :: " + examId));
+
+        this.examRepository.delete(exam);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+
         return response;
     }
 }

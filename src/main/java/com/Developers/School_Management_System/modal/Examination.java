@@ -9,8 +9,17 @@ import lombok.Data;
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_id")
     private Long id;
-    @Column(name = "stdmarks")
-    private String marks;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;
+
+    @Column(name = "marks")
+    private String marks;
 }

@@ -10,11 +10,12 @@ import java.util.Date;
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "attendance_id")
     private Long id;
 
-
-    private String StudentName;
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @Column(name = "Date")
     private Date date;

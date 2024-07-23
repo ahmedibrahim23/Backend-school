@@ -4,6 +4,8 @@ package com.Developers.School_Management_System.modal;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name= "ClassTble")
@@ -16,5 +18,13 @@ public class StdClass {
     @Column(name = "Name")
     private String name;
 
-    private String subject;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    @OneToMany(mappedBy = "stdClass")
+    private List<Student> students;
+
+    @OneToMany(mappedBy = "stdClass")
+    private List<Subject> subjects;
 }

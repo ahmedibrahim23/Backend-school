@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,24 +15,22 @@ public class Student {
     @Column(name = "student_id")
     private Long id;
 
-    @Column(name = "FullName")
-    private String fullName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "Age")
+    @Column(name = "age")
     private int age;
 
-    @Column(name = "Phone")
-    private String phone;
+    @ManyToOne
+    @JoinColumn(name = "class_id", nullable = false)
+    private StdClass stdClass;
 
-    @Column(name = "Date_of_birth")
-    private Date dateOfBirth;
+    @OneToMany(mappedBy = "student")
+    private List<Attendance> attendance;
 
-    @Column(name = "Gender")
-    private String gender;
+    @OneToMany(mappedBy = "student")
+    private List<Examination> exams;
 
-
-    private String className;
-
-    @Column(name = "Password")
-    private String password;
+    @OneToMany(mappedBy = "student")
+    private List<Fee> fees;
 }

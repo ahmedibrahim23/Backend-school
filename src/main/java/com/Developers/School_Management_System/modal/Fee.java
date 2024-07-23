@@ -10,7 +10,7 @@ import java.util.Date;
 public class Fee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "fee_id")
     private Long id;
 
     @Column(name = "Amount")
@@ -19,9 +19,9 @@ public class Fee {
     @Column(name = "Date")
     private Date date;
 
-  @ManyToOne
-  @JoinColumn(name = "student_id", nullable = false)
-  private StdClass StudentTble;
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @Column(name = "Status")
     private Boolean status;
