@@ -1,7 +1,5 @@
 package com.Developers.School_Management_System.controller;
 
-
-
 import com.Developers.School_Management_System.exception.ResourceNotFoundException;
 import com.Developers.School_Management_System.modal.Teacher;
 import com.Developers.School_Management_System.repo.TeacherRepo;
