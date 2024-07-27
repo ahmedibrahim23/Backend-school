@@ -12,25 +12,34 @@ import java.util.List;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
+    @Column(name = "Id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "FullName")
+    private String fullName;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "DateOfBirth")
+    private Date dateOfBirth;
 
+    @Column(name = "Gender")
+    private String gender;
+
+    @Column(name = "Address")
+    private String address;
+
+    @Column(name = "Phone")
+    private String phone;
+
+    @Column(name = "Email")
+    private String email;
+    @Column(name = "Password")
+    private String password;
+    @Column(name = "ParentName")
+    private String parentname;
+    @Column(name = "ParentNumber")
+    private int parentnumber;
     @ManyToOne
-    @JoinColumn(name = "class_id", nullable = false)
+    @JoinColumn(name = "Class_id")
     private StdClass stdClass;
 
-    @OneToMany(mappedBy = "student")
-    private List<Attendance> attendance;
-
-    @OneToMany(mappedBy = "student")
-    private List<Examination> exams;
-
-    @OneToMany(mappedBy = "student")
-    private List<Fee> fees;
 }

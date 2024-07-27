@@ -22,13 +22,12 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
-    private ClassRepo classRepository;
+    private ClassRepository classRepository;
 
     @GetMapping
     public List<Student> getAllStudents() {
         return this.studentRepository.findAll();
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable(value = "id") Long studentId)
             throws ResourceNotFoundException {
@@ -36,36 +35,31 @@ public class StudentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentId));
         return ResponseEntity.ok().body(student);
     }
-
     @PostMapping("/new")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) throws ResourceNotFoundException {
-        // Check if the class ID is provided in the request
-        if (student.getStdClass() == null || student.getStdClass().getId() == null) {
-            throw new IllegalArgumentException("Class ID must be provided.");
+    public ResponseEntity<Student > createStudent(@RequestBody Student student) throws ResourceNotFoundException {
+        if (student.getStdClass() == null || student.getStdClass().getId()==null){
+            throw new IllegalArgumentException("class id must provided.");
         }
-
-        // Fetch the class from the repository
-        StdClass stdClass = classRepository.findById(student.getStdClass().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Class not found for this id :: " + student.getStdClass().getId()));
-
-        // Set the class to the student
+        StdClass stdClass= classRepository.findById(student.getStdClass().getId())
+                .orElseThrow(()-> new ResourceNotFoundException("class not found for this id:"+student.getStdClass().getId()));
         student.setStdClass(stdClass);
-
-        // Save the student with the assigned class
-        Student createdStudent = studentRepository.save(student);
-
+        Student createdStudent= studentRepository.save(student);
         return ResponseEntity.ok(createdStudent);
     }
-
-
     @PutMapping("/edit/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable(value = "id") Long studentId,
                                                  @Validated @RequestBody Student studentDetails) throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentId));
-
-        student.setName(studentDetails.getName());
-        student.setAge(studentDetails.getAge());
+        student.setFullName(studentDetails.getFullName());
+        student.setDateOfBirth(studentDetails.getDateOfBirth());
+        student.setEmail(studentDetails.getEmail());
+        student.setAddress(studentDetails.getAddress());
+        student.setGender(studentDetails.getGender());
+        student.setParentname(studentDetails.getParentname());
+        student.setParentnumber(studentDetails.getParentnumber());
+        student.setPhone(studentDetails.getPhone());
+        student.setPassword(studentDetails.getPassword());
         student.setStdClass(studentDetails.getStdClass());
 
         return ResponseEntity.ok(this.studentRepository.save(student));
