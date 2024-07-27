@@ -36,7 +36,7 @@ public class ExamController {
 
     // Create a new exam
     @PostMapping("/new")
-    public Exam createExam(@RequestBody Exam exam) {
+    public Examination createExam(@RequestBody Examination exam) {
         return this.examRepository.save(exam);
     }
 
