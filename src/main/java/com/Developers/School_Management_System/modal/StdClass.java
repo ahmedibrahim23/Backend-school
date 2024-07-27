@@ -17,14 +17,7 @@ public class StdClass {
 
     @Column(name = "Name")
     private String name;
-
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
-
-    @OneToMany(mappedBy = "stdClass")
-    private List<Student> students;
-
-    @OneToMany(mappedBy = "stdClass")
-    private List<Subject> subjects;
 }
