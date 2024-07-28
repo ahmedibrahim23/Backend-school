@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/students")
@@ -22,11 +23,26 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
-    private ClassRepository classRepository;
+    private ClassRepo classRepo;
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return this.studentRepository.findAll();
+    public List<Map<String , Object>> getAllStudents() {
+        return this.studentRepository.findAll().stream().map(student -> {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", student.getId());
+            response.put("fullname", student.getFullName());
+            response.put("dateOfBirth", student.getDateOfBirth());
+            response.put("gender", student.getGender());
+            response.put("address", student.getAddress());
+            response.put("phone", student.getPhone());
+            response.put("email", student.getEmail());
+            response.put("password", student.getPassword());
+            response.put("parentname", student.getParentname());
+            response.put("parentnumber", student.getParentnumber());
+            response.put("class_id", student.getStdClass().getId());
+            response.put("className", student.getStdClass().getName());
+            return response;
+        }).collect(Collectors.toList());
     }
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable(value = "id") Long studentId)
@@ -40,7 +56,7 @@ public class StudentController {
         if (student.getStdClass() == null || student.getStdClass().getId()==null){
             throw new IllegalArgumentException("class id must provided.");
         }
-        StdClass stdClass= classRepository.findById(student.getStdClass().getId())
+        StdClass stdClass= classRepo.findById(student.getStdClass().getId())
                 .orElseThrow(()-> new ResourceNotFoundException("class not found for this id:"+student.getStdClass().getId()));
         student.setStdClass(stdClass);
         Student createdStudent= studentRepository.save(student);
