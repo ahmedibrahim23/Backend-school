@@ -2,9 +2,13 @@ package com.Developers.School_Management_System.controller;
 
 import com.Developers.School_Management_System.exception.ResourceNotFoundException;
 import com.Developers.School_Management_System.modal.Subject;
+import com.Developers.School_Management_System.modal.Teacher;
 import com.Developers.School_Management_System.repo.SubjectRepository;
+import com.Developers.School_Management_System.repo.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
@@ -12,6 +16,7 @@ import org.springframework.web.client.ResourceAccessException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/subjects")
@@ -19,33 +24,118 @@ public class SubjectController {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private TeacherRepo teacherRepository;
+
     @GetMapping
-    public List<Subject> getAllSubjects() {
-        return this.subjectRepository.findAll();
+    public List<Map<String, Object>> getAllSubjects() {
+        return subjectRepository.findAll().stream().map(subject -> {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", subject.getId());
+            response.put("subjectName", subject.getSubjectName());
+            response.put("teacherId", subject.getTeacher().getId());
+            response.put("teacherName", subject.getTeacher().getFullName());
+            return response;
+        }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subject> getSubjectById(@PathVariable(value = "id") Long subjectId)
+    public ResponseEntity<Map<String, Object>> getSubjectById(@PathVariable(value = "id") Long subjectId)
             throws ResourceNotFoundException {
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found for this id :: " + subjectId));
-        return ResponseEntity.ok().body(subject);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", subject.getId());
+        response.put("subjectName", subject.getSubjectName());
+        response.put("teacherId", subject.getTeacher().getId());
+        response.put("teacherName", subject.getTeacher().getFullName());
+
+        return ResponseEntity.ok().body(response);
     }
 
+//    @PostMapping("/new")
+//    public ResponseEntity<?> createSubject(@Validated @RequestBody Subject subject, BindingResult result) {
+//        if (subject.getSubjectName() == null || subject.getSubjectName().isEmpty()) {
+//            result.rejectValue("subjectName", "error.subject", "Subject name is required.");
+//        }
+//
+//        if (result.hasErrors()) {
+//            return ResponseEntity.badRequest().body(result.getAllErrors());
+//        }
+//
+//        Subject createdSubject = subjectRepository.save(subject);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("id", createdSubject.getId());
+//        response.put("subjectName", createdSubject.getSubjectName());
+//
+//        return ResponseEntity.ok(response);
+//    }
+
     @PostMapping("/new")
-    public Subject createSubject(@RequestBody Subject subject) {
-        return this.subjectRepository.save(subject);
+    public ResponseEntity<?> createSubject(@Validated @RequestBody Map<String, Object> request, BindingResult result) throws ResourceNotFoundException {
+        if (request.get("teacherId") == null) {
+            result.rejectValue("teacherId", "error.class", "Teacher ID is required.");
+        }
+        if (request.get("name") == null || ((String) request.get("name")).isEmpty()) {
+            result.rejectValue("name", "error.class", "Subject name is required.");
+        }
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+
+        Long teacherId;
+        try {
+            teacherId = Long.valueOf(request.get("teacherId").toString());
+        } catch (NumberFormatException e) {
+            result.rejectValue("teacherId", "error.class", "Invalid teacher ID format.");
+            return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+
+        Teacher teacher;
+        try {
+            teacher = teacherRepository.findById(teacherId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Teacher not found for this id :: " + teacherId));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Teacher not found for this id :: " + teacherId);
+        }
+
+        Subject subject = new Subject();
+        subject.setSubjectName((String) request.get("subjectName"));
+        subject.setTeacher(teacher);
+
+        Subject createdSubject = subjectRepository.save(subject);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", createdSubject.getId());
+        response.put("subjectName", createdSubject.getSubjectName());
+        response.put("teacherId", createdSubject.getTeacher().getId());
+        response.put("teacherName", createdSubject.getTeacher().getFullName());
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Subject> updateSubject(@PathVariable(value = "id") Long subjectId,
-                                                 @Validated @RequestBody Subject subjectDetails) throws ResourceNotFoundException {
+    public ResponseEntity<Map<String, Object>> updateSubject(@PathVariable(value = "id") Long subjectId,
+                                                             @Validated @RequestBody Subject subjectDetails,
+                                                             BindingResult result) throws ResourceNotFoundException {
         Subject subject = subjectRepository.findById(subjectId)
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found for this id :: " + subjectId));
+                .orElseThrow(() -> new ResourceNotFoundException("Class not found for this id :: " + subjectId));
 
         subject.setSubjectName(subjectDetails.getSubjectName());
+        subject.setTeacher(subjectDetails.getTeacher());
 
-        return ResponseEntity.ok(this.subjectRepository.save(subject));
+        Subject updatedSubject = subjectRepository.save(subject);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", updatedSubject.getId());
+        response.put("subjectName", updatedSubject.getSubjectName());
+        response.put("teacherId", updatedSubject.getTeacher().getId());
+        response.put("teacherName", updatedSubject.getTeacher().getFullName());
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -53,7 +143,7 @@ public class SubjectController {
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject not found for this id :: " + subjectId));
 
-        this.subjectRepository.delete(subject);
+        subjectRepository.delete(subject);
 
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);

@@ -18,13 +18,6 @@ public class Subject {
     private String subjectName;
 
     @ManyToOne
-    @JoinColumn(name = "class_id", nullable = false)
-    private StdClass stdClass;
-
-    @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
-
-    @OneToMany(mappedBy = "subject")
-    private List<Examination> grades;
 }
