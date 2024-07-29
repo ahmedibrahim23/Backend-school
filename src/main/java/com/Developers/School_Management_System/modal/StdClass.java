@@ -20,4 +20,7 @@ public class StdClass {
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
+    @OneToMany(mappedBy = "stdClass")
+    private List<Student> students;
 }
