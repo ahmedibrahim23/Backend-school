@@ -41,5 +41,4 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "Class_id")
     private StdClass stdClass;
-
 }

@@ -3,6 +3,7 @@ package com.Developers.School_Management_System.modal;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @Entity
 @Data
@@ -10,16 +11,19 @@ import java.util.Date;
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attendance_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @Column(name = "Date")
-    private Date date;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id", nullable = false)
+    private StdClass stdClass;
 
-    @Column(name = "Status")
-    private String status;
+    @Column(name = "attendance_date", nullable = false)
+    private LocalDateTime attendanceDate;
+
+    @Column(name = "is_present", nullable = false)
+    private Boolean present;
 }
