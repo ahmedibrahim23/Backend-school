@@ -1,6 +1,6 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.exception.StudentNotFoundException;
+import com.Developers.School_Management_System.Exception.StudentNotFoundException;
 import com.Developers.School_Management_System.modal.Student;
 import com.Developers.School_Management_System.repo.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;

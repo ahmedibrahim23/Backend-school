@@ -12,7 +12,7 @@ import java.util.Date;
 public class GlobalExceptionHandler {
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request){
-        ErrorDetails errorDetails=new ErrorDetails(ex.getMessage(),  new Date(), request.getDescription(false));
+         ErrorDetails errorDetails=new ErrorDetails(ex.getMessage(),  new Date(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

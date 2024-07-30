@@ -1,54 +1,67 @@
 package com.Developers.School_Management_System.controller;
 
-import com.Developers.School_Management_System.exception.StudentNotFoundException;
+
+import com.Developers.School_Management_System.Exception.ResourceNotFoundException;
 import com.Developers.School_Management_System.modal.Fee;
 import com.Developers.School_Management_System.repo.FeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/Fee")
+@RequestMapping("/api/v1/")
 public class FeeContoller {
-    private  final FeeRepository feeRepository;
-
-@Autowired
-    public FeeContoller(FeeRepository feeRepository) {  this.feeRepository = feeRepository;}
-  @GetMapping
+    @Autowired
+    private FeeRepository feeRepository;
+    //get fee
+    @GetMapping("/fees")
     public List<Fee> getAllFee(){
-        return feeRepository.findAll();
+        return this.feeRepository.findAll();
     }
-    @GetMapping("/{id}")
-    public Fee getFeeById( @PathVariable Long id){
-        return feeRepository.findById(id).orElse(null);
-    }
-    @PostMapping
-    public void saveFee(@RequestBody  Fee fee){
-        feeRepository.save(fee);
-    }
-    @DeleteMapping("/{id}")
-    public void deleteFee( @PathVariable Long id){
-        if(!feeRepository.existsById(id)){
-            throw new StudentNotFoundException(id);
+    //get fee by id
+    @GetMapping("/fees/{id}")
+    public ResponseEntity<Fee> getFeeById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+            Fee fee= feeRepository.findById(id)
+                    .orElseThrow(() ->  new  ResourceNotFoundException("fee not found of that id: "+ id));
+            return ResponseEntity.ok().body(fee);
+
+
         }
-        feeRepository.deleteById(id);
+        //save fee
+        @PostMapping("fees")
+        public Fee createFee(@RequestBody Fee fee){
+            return this.feeRepository.save(fee);
+        }
+        //update fee
+        @PutMapping("fees/id")
+        public ResponseEntity<Fee> updateFee(@PathVariable(value = "id") Long id,
+                                             @Validated @RequestBody Fee feeDetail) throws ResourceNotFoundException{
+
+        Fee fee= feeRepository.findById(id)
+                .orElseThrow(()-> new  ResourceNotFoundException("fee not found of id: "+id));
+        fee.setAmount(feeDetail.getAmount());
+        fee.setStatus(feeDetail.getStatus());
+        fee.setDate(feeDetail.getDate());
+        return ResponseEntity.ok(this.feeRepository.save(fee));
+        }
+        //delete fee
+    public Map<String,Boolean> deleteFee(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+        Fee fee=feeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("fee not found of this id:"+id));
+        this.feeRepository.delete(fee);
+        Map<String, Boolean> response=new HashMap<>();
+        response.put("delete",Boolean.TRUE);
+        return response;
 
     }
 
- public    Fee  updateFee(@PathVariable Long id, @RequestBody Fee fee){
-        return feeRepository.findById(id)
-                .map(fee1 ->{
-                    fee1.setAmount(fee.getAmount());
-                    fee1.setStatus(fee.getStatus());
-                    fee1.setDate(fee.getDate());
-                    fee1.setStudentTble(fee.getStudentTble());
-                    return feeRepository.save(fee1);
-
-
-                }).orElseThrow(() -> new StudentNotFoundException(id));
-
     }
 
 
-}
+
+
+

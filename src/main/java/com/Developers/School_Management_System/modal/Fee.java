@@ -3,10 +3,11 @@ package com.Developers.School_Management_System.modal;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @Entity
 @Data
-@Table(name = "FeeTable")
+@Table(name = "Fee_tble")
 public class Fee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,4 @@ public class Fee {
     @Column(name = "Date")
     private Date date;
 
-  @ManyToOne
-  @JoinColumn(name = "student_id", nullable = false)
-  private Class StudentTble;
 }
