@@ -31,7 +31,7 @@ public class StudentController {
         return this.studentRepository.findAll().stream().map(student -> {
             Map<String, Object> response = new HashMap<>();
             response.put("id", student.getId());
-            response.put("fullname", student.getFullName());
+            response.put("fullname", student.getFullname());
             response.put("dateOfBirth", student.getDateOfBirth());
             response.put("gender", student.getGender());
             response.put("address", student.getAddress());
@@ -68,7 +68,7 @@ public class StudentController {
                                                  @Validated @RequestBody Student studentDetails) throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentId));
-        student.setFullName(studentDetails.getFullName());
+        student.setFullname(studentDetails.getFullname());
         student.setDateOfBirth(studentDetails.getDateOfBirth());
         student.setEmail(studentDetails.getEmail());
         student.setAddress(studentDetails.getAddress());
