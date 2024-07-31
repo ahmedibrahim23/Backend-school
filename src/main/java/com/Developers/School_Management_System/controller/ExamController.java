@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/exams")
+@CrossOrigin("http://localhost:5173/")
 public class ExamController {
     @Autowired
     private ExamRepository examRepository;

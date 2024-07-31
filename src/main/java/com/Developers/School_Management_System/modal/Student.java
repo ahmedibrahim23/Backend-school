@@ -38,6 +38,8 @@ public class Student {
     private String parentname;
     @Column(name = "ParentNumber")
     private int parentnumber;
+    @Column(name = "Role")
+    private String role;
     @ManyToOne
     @JoinColumn(name = "Class_id")
     private StdClass stdClass;

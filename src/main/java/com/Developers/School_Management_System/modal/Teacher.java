@@ -42,6 +42,9 @@ public class Teacher {
     @Column(name = "Hiredate")
     private Date hireDate;
 
+    @Column(name = "Role")
+    private String role;
+
     @OneToMany(mappedBy = "teacher")
     private List<StdClass> classes;
 

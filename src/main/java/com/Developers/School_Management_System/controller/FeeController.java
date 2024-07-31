@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/fees")
+@CrossOrigin("http://localhost:5173/")
 public class FeeController {
     @Autowired
     private FeeRepository feeRepository;

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/subjects")
+@CrossOrigin("http://localhost:5173/")
 public class SubjectController {
     @Autowired
     private SubjectRepository subjectRepository;

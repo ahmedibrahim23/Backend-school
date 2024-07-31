@@ -2,6 +2,7 @@ package com.Developers.School_Management_System.controller;
 
 import com.Developers.School_Management_System.exception.ResourceNotFoundException;
 import com.Developers.School_Management_System.modal.Teacher;
+import com.Developers.School_Management_System.repo.ClassRepo;
 import com.Developers.School_Management_System.repo.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/teachers")
+@CrossOrigin("http://localhost:5173/")
 public class TeacherController {
     @Autowired
     private TeacherRepo teacherRepository;
@@ -66,6 +68,12 @@ public class TeacherController {
         response.put("deleted", Boolean.TRUE);
 
         return response;
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getStudentCount() {
+        long count = teacherRepository.count();
+        return ResponseEntity.ok(count);
     }
 }
 

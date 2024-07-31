@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/attendances")
+@CrossOrigin("http://localhost:5173/")
 public class AttendanceController {
     @Autowired
     private AttendanceRepository attendanceRepository;

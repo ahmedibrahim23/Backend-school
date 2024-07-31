@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/students")
+@CrossOrigin("http://localhost:5173/")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
@@ -92,6 +93,12 @@ public class StudentController {
         response.put("deleted", Boolean.TRUE);
 
         return response;
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getStudentCount() {
+        long count = studentRepository.count();
+        return ResponseEntity.ok(count);
     }
 }
 
