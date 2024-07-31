@@ -28,26 +28,17 @@ public class Teacher {
     private String address;
 
     @Column(name = "Phone")
-    private String phone;
+    private String Phone;
 
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "age")
+    @Column(name = "Age")
     private int age;
 
     @Column(name = "Password")
-    private String Password;
+    private String password;
 
     @Column(name = "Hiredate")
     private Date hireDate;
-
-    @Column(name = "Role")
-    private String role;
-
-    @OneToMany(mappedBy = "teacher")
-    private List<StdClass> classes;
-
-    @OneToMany(mappedBy = "teacher")
-    private List<Subject> subjects;
 }

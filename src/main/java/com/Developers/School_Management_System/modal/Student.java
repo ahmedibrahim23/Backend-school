@@ -16,7 +16,7 @@ public class Student {
     private Long id;
 
     @Column(name = "FullName")
-    private String fullName;
+    private String fullname;
 
     @Column(name = "DateOfBirth")
     private Date dateOfBirth;
@@ -38,8 +38,6 @@ public class Student {
     private String parentname;
     @Column(name = "ParentNumber")
     private int parentnumber;
-    @Column(name = "Role")
-    private String role;
     @ManyToOne
     @JoinColumn(name = "Class_id")
     private StdClass stdClass;
