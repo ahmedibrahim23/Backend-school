@@ -33,7 +33,7 @@ public class SubjectController {
         return subjectRepository.findAll().stream().map(subject -> {
             Map<String, Object> response = new HashMap<>();
             response.put("id", subject.getId());
-            response.put("subjectName", subject.getSubjectName());
+            response.put("subjectName", subject.getName());
             response.put("teacherId", subject.getTeacher().getId());
             response.put("teacherName", subject.getTeacher().getFullName());
             return response;
@@ -48,31 +48,12 @@ public class SubjectController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("id", subject.getId());
-        response.put("subjectName", subject.getSubjectName());
+        response.put("name", subject.getName());
         response.put("teacherId", subject.getTeacher().getId());
         response.put("teacherName", subject.getTeacher().getFullName());
 
         return ResponseEntity.ok().body(response);
     }
-
-//    @PostMapping("/new")
-//    public ResponseEntity<?> createSubject(@Validated @RequestBody Subject subject, BindingResult result) {
-//        if (subject.getSubjectName() == null || subject.getSubjectName().isEmpty()) {
-//            result.rejectValue("subjectName", "error.subject", "Subject name is required.");
-//        }
-//
-//        if (result.hasErrors()) {
-//            return ResponseEntity.badRequest().body(result.getAllErrors());
-//        }
-//
-//        Subject createdSubject = subjectRepository.save(subject);
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("id", createdSubject.getId());
-//        response.put("subjectName", createdSubject.getSubjectName());
-//
-//        return ResponseEntity.ok(response);
-//    }
 
     @PostMapping("/new")
     public ResponseEntity<?> createSubject(@Validated @RequestBody Map<String, Object> request, BindingResult result) throws ResourceNotFoundException {
@@ -104,14 +85,14 @@ public class SubjectController {
         }
 
         Subject subject = new Subject();
-        subject.setSubjectName((String) request.get("subjectName"));
+        subject.setName((String) request.get("name"));
         subject.setTeacher(teacher);
 
         Subject createdSubject = subjectRepository.save(subject);
 
         Map<String, Object> response = new HashMap<>();
         response.put("id", createdSubject.getId());
-        response.put("subjectName", createdSubject.getSubjectName());
+        response.put("name", createdSubject.getName());
         response.put("teacherId", createdSubject.getTeacher().getId());
         response.put("teacherName", createdSubject.getTeacher().getFullName());
 
@@ -125,14 +106,14 @@ public class SubjectController {
         Subject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Class not found for this id :: " + subjectId));
 
-        subject.setSubjectName(subjectDetails.getSubjectName());
+        subject.setName(subjectDetails.getName());
         subject.setTeacher(subjectDetails.getTeacher());
 
         Subject updatedSubject = subjectRepository.save(subject);
 
         Map<String, Object> response = new HashMap<>();
         response.put("id", updatedSubject.getId());
-        response.put("subjectName", updatedSubject.getSubjectName());
+        response.put("name", updatedSubject.getName());
         response.put("teacherId", updatedSubject.getTeacher().getId());
         response.put("teacherName", updatedSubject.getTeacher().getFullName());
 

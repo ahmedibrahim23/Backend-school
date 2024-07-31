@@ -15,7 +15,7 @@ public class Subject {
     private Long id;
 
     @Column(name = "subjectName")
-    private String subjectName;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
