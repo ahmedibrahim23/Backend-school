@@ -31,15 +31,15 @@ public class StudentController {
         return this.studentRepository.findAll().stream().map(student -> {
             Map<String, Object> response = new HashMap<>();
             response.put("id", student.getId());
-            response.put("fullname", student.getFullname());
+            response.put("fullName", student.getFullName());
             response.put("dateOfBirth", student.getDateOfBirth());
             response.put("gender", student.getGender());
             response.put("address", student.getAddress());
             response.put("phone", student.getPhone());
             response.put("email", student.getEmail());
             response.put("password", student.getPassword());
-            response.put("parentname", student.getParentname());
-            response.put("parentnumber", student.getParentnumber());
+            response.put("parentName", student.getParentName());
+            response.put("parentNumber", student.getParentName());
             response.put("class_id", student.getStdClass().getId());
             response.put("className", student.getStdClass().getName());
             return response;
@@ -68,13 +68,13 @@ public class StudentController {
                                                  @Validated @RequestBody Student studentDetails) throws ResourceNotFoundException {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found for this id :: " + studentId));
-        student.setFullname(studentDetails.getFullname());
+        student.setFullName(studentDetails.getFullName());
         student.setDateOfBirth(studentDetails.getDateOfBirth());
         student.setEmail(studentDetails.getEmail());
         student.setAddress(studentDetails.getAddress());
         student.setGender(studentDetails.getGender());
-        student.setParentname(studentDetails.getParentname());
-        student.setParentnumber(studentDetails.getParentnumber());
+        student.setParentName(studentDetails.getParentName());
+        student.setParentNumber(studentDetails.getParentNumber());
         student.setPhone(studentDetails.getPhone());
         student.setPassword(studentDetails.getPassword());
         student.setStdClass(studentDetails.getStdClass());
